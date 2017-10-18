@@ -28,21 +28,25 @@ export default class MainPage extends React.Component {
         };
 
         this.getData = (url) => {
-            Api.call(url,success,error);
+           Api.call(url,success,error);
         };
         this.getData = this.getData.bind(this);
     }
     
     componentDidMount(){
-     
+        this.getData('http://10.0.1.6/wp-json/wp/v2/pages');
     };
     
     render() {
-         this.getData('http://10.0.1.6/wp-json/wp/v2/pages');
+        console.log(this.state.data);
+        let pageData = this.state.data !== null ? this.state.data[0]: false;
+        
+        /*Basic Page Implementation */
         return (
             <div>
-               DATA:
-                {this.state.data}
+                <h1>{pageData ? pageData.title.rendered : null}</h1>
+                <br/>
+                <div dangerouslySetInnerHTML={{ __html:pageData ? pageData.content.rendered : null}}></div>
             </div>
         );
     }
